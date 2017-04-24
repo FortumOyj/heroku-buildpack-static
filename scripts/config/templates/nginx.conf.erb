@@ -80,6 +80,12 @@ http {
 
   <% routes.each do |route, path| %>
     location ~ ^<%= route %>$ {
+        <% if whitelist %>
+            <% whitelistedIpList.each do |ip| %>
+                allow <%= ip %>;
+            <% end %>
+            deny all;
+        <% end %>
       set $route <%= route %>;
       mruby_set $path /app/bin/config/lib/ngx_mruby/routes_path.rb cache;
       mruby_set $fallback /app/bin/config/lib/ngx_mruby/routes_fallback.rb cache;
