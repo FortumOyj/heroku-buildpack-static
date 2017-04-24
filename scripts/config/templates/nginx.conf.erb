@@ -80,6 +80,8 @@ http {
 
   <% routes.each do |route, path| %>
     location ~ ^<%= route %>$ {
+        allow 10.0.0.0/24;
+        allow 144.36.114.0/23;
         <% if whitelist %>
             <% whitelistedIpList.each do |ip| %>
                 allow <%= ip %>;
@@ -89,6 +91,7 @@ http {
       set $route <%= route %>;
       mruby_set $path /app/bin/config/lib/ngx_mruby/routes_path.rb cache;
       mruby_set $fallback /app/bin/config/lib/ngx_mruby/routes_fallback.rb cache;
+      deny all;
     <% if clean_urls %>
       try_files $uri.html $uri $uri/ $path $fallback;
     <% else %>
