@@ -8,6 +8,7 @@ class NginxConfig
     encoding: "UTF-8",
     clean_urls: false,
     https_only: false,
+    whitelist: false,
     worker_connections: 512,
     resolver: "8.8.8.8",
     logging: {
@@ -43,9 +44,11 @@ class NginxConfig
     end
 
     json["clean_urls"] ||= DEFAULT[:clean_urls]
+    json["whitelist"] ||= DEFAULT[:whitelist]
     json["https_only"] ||= DEFAULT[:https_only]
 
     json["routes"] ||= {}
+    json["whitelistedIpList"] ||= []
     json["routes"] = NginxConfigUtil.parse_routes(json["routes"])
 
     json["redirects"] ||= {}
