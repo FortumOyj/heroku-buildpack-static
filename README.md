@@ -242,6 +242,34 @@ when accessing `/foo`, `X-Foo` will have the value `"foo"` and `X-Bar` will not 
 * Custom Routes
 * 404
 
+## run on local machine with Docker on Windows
+Install Docker.
+From local git directory run in command line:
+```sh
+docker build --tag local -f ./local/Dockerfile .
+```
+
+Run Docker
+```sh
+docker run -v /var/run/docker.sock:/var/run/docker.sock -t -i local
+```
+
+In Docker console run
+```sh
+sudo bundle install
+sudo bundle exec rspec
+```
+
+# Known issue with Docker run
+```sh
+Step 7/14 : RUN /buildpack/bin/compile /app/
+ ---> Running in d6b913c6d7c0
+: No such file or directory
+```
+The error message suggests that the script you're invoking has embedded \r characters, which in turn suggests that it has Windows-style \r\n line endings instead of the \n-only line endings bash expects.
+Need to change in bin/compile characters to Unix line endings.
+Really you need check all files on Unix line endings. All bash scripts need set in Unix line endings format.
+
 ## Testing
 For testing we use Docker to replicate Heroku locally. You'll need to have [it setup locally](https://docs.docker.com/installation/). We're also using rspec for testing with Ruby. You'll need to have those setup and install those deps:
 
