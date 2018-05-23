@@ -19,7 +19,7 @@ class AppRunner
     @debug  = debug
     @proxy  = nil
     @delete = delete
-    env.merge!("STATIC_DEBUG" => "true") if @debug
+    env.merge!("STATIC_DEBUG" => "true", "FIXTURE_PATH" => "#{fixtures_path(fixture)}") if @debug
 
     app_options = {
       "Image"      => BuildpackBuilder::TAG,
@@ -43,7 +43,6 @@ class AppRunner
         app_options["Env"] = env.to_a.map {|i| i.join("=") }
       end
     end
-
     @app    = Docker::Container.create(app_options)
     @router = RouterRunner.new(@app.id, @delete)
   end

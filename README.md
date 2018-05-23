@@ -243,21 +243,25 @@ when accessing `/foo`, `X-Foo` will have the value `"foo"` and `X-Bar` will not 
 * 404
 
 ## run on local machine with Docker on Windows
-Install Docker.
+Install Docker CE.
 From local git directory run in command line:
 ```sh
-docker build --tag local -f ./local/Dockerfile .
+docker build --tag local -f Dockerfile .
 ```
 
 Run Docker
 ```sh
-docker run -v /var/run/docker.sock:/var/run/docker.sock -t -i local
+docker run --network host -v /var/run/docker.sock:/var/run/docker.sock -t -i local
 ```
 
-In Docker console run
+In Docker console run for tests
 ```sh
-sudo bundle install
 sudo bundle exec rspec
+```
+
+# To clean all containers, images, volumes, cache in Docker
+```sh
+ docker system prune -a --volumes
 ```
 
 # Known issue with Docker run

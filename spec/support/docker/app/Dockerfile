@@ -6,6 +6,7 @@ USER app
 WORKDIR /buildpack
 COPY bin/ /buildpack/bin/
 COPY scripts/ /buildpack/scripts/
+COPY spec/ /build2/spec/
 RUN /buildpack/bin/compile /app
 
 ENV HOME /app

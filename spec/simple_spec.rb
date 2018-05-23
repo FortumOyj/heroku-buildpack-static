@@ -10,7 +10,7 @@ require_relative "support/path_helper"
 
 RSpec.describe "Simple" do
   before(:all) do
-    @debug = false
+    @debug = true
     BuildpackBuilder.new(@debug, ENV['CIRCLECI'])
     RouterBuilder.new(@debug, ENV['CIRCLECI'])
     ProxyBuilder.new(@debug, ENV["CIRCLECI"])

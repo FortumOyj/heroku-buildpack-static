@@ -1,3 +1,4 @@
+require "pathname"
 module PathHelper
   def fixtures_path(*path)
     __build_path("../fixtures", *path)

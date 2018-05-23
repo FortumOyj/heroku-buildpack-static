@@ -23,7 +23,8 @@ task :server, [:fixture] do |t, args|
   end
 
   BuildpackBuilder.new(debug)
-  app = AppRunner.new(args[:fixture], {}, debug)
+  proxy = nil
+  app = AppRunner.new(args[:fixture], proxy, {}, debug)
   app.run do
     Thread.current[:name] = thread_name
     Thread.stop
